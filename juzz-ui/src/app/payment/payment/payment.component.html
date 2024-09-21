@@ -1,0 +1,21 @@
+<div class="payment-container">
+    <!-- <h2>Payment Time Left</h2>
+    <div class="timer">9:57</div> -->
+    <div class="amount">
+      <h3>Transfer Amount</h3>
+      <p>Rs. {{ amount }}/-</p>
+      <div>
+        <img  [src]="'data:image/png;base64,' + qrCodeImage" alt="QR Code" />
+      </div>
+      <p>Receipt: {{ receipt }}</p>
+    </div>
+  
+    <div class="actions">
+      <input type="text" id="transactionNumber" [(ngModel)]="transactionNumber" placeholder="Enter Transaction Number" required />
+      <button (click)="enterTransactionId()">Submit</button>
+    </div>
+  
+    <footer>
+      <p>100% Secure Payments</p>
+    </footer>
+  </div>
