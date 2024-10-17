@@ -1,0 +1,26 @@
+// src/custom-theme.scss
+
+// Import Angular Material
+@use '@angular/material' as mat;
+
+// Include the common styles for Angular Material
+@include mat.core();
+
+// Define the palettes for your theme
+$juzz-ui-primary: mat.define-palette(mat.$indigo-palette);
+$juzz-ui-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$juzz-ui-warn: mat.define-palette(mat.$red-palette);
+
+// Create the theme object
+$juzz-ui-theme: mat.define-light-theme((
+  color: (
+    primary: $juzz-ui-primary,
+    accent: $juzz-ui-accent,
+    warn: $juzz-ui-warn,
+  ),
+  typography: mat.define-typography-config(),
+  density: 0
+));
+
+// Include theme styles for core and each component used in your app
+@include mat.all-component-themes($juzz-ui-theme);

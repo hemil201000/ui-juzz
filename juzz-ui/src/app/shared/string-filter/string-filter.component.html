@@ -1,0 +1,37 @@
+<button type="button" (click)="txtFilter.focus();" [color]="filter.applied ? 'warn' : ''" mat-icon-button #menuTrigger="matMenuTrigger"
+  [matMenuTriggerFor]="menu">
+  <mat-icon>filter_list</mat-icon>
+</button>
+
+<mat-menu #menu="matMenu" [overlapTrigger]="false" (click)="$event.stopPropagation();">
+
+  <div onclick="return false;" style="height: auto; padding: 15px;" disableRipple="true">
+
+    <form class="row">
+
+      <mat-form-field class="col-12" (click)="$event.stopPropagation();">
+
+        <input matInput (click)="$event.stopPropagation();" type="new_val" #txtFilter name="filter" id="filter" [(ngModel)]="filter.new_val"
+          placeholder="Filter" autocomplete="off" />
+
+        <button (click)="applyFilter(menuTrigger);" matSuffix mat-icon-button aria-label="Clear">
+          <mat-icon>check</mat-icon>
+        </button>
+
+        <button (click)="filter.new_val = ''; applyFilter(menuTrigger);" type="button" matSuffix mat-icon-button aria-label="Clear">
+          <mat-icon>close</mat-icon>
+        </button>
+
+      </mat-form-field>
+
+      <mat-form-field class="col-12" (click)="$event.stopPropagation();">
+        <mat-select [(ngModel)]="filter.comparision" (ngModelChange)="filter.new_val && applyFilter(menuTrigger, true);" name="comparision">
+          <mat-option *ngFor="let f of types" [value]="f">
+            {{ f }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+    </form>
+  </div>
+</mat-menu>

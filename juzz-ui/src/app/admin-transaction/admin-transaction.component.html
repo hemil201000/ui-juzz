@@ -1,0 +1,65 @@
+<div class="transaction-list">
+  <mat-form-field>
+    <mat-label>SEARCH</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Enter Your Value" #input>
+  </mat-form-field>
+  <mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+    
+    <!-- Client Transaction ID Column -->
+    <!-- <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Client Transaction ID 
+        <string-filter [filter]="transactionListRequest.filter.search[0]" (search)="search()"></string-filter>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.clientTransactionId }} </mat-cell>
+    </ng-container> -->
+
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef disableClear="true">
+        <span mat-sort-header style="display: inline-block; ">Client Transaction ID</span>
+        <!-- <string-filter [filter]="transactionListRequest.filter.search[0]" (search)="search()"></string-filter> -->
+      </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.clientTransactionId }} </mat-cell>
+    </ng-container>
+
+    <!-- UPI ID Column -->
+    <ng-container matColumnDef="upiID">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> UPI ID </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.upiId }} </mat-cell>
+    </ng-container>
+
+    <!-- Transaction Number Column -->
+    <ng-container matColumnDef="transactionNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Transaction Number </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.transactionNumber }} </mat-cell>
+    </ng-container>
+
+    <!-- Account ID Column -->
+    <ng-container matColumnDef="accId">
+      <mat-header-cell *matHeaderCellDef> Account ID </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.accId }} </mat-cell>
+    </ng-container>
+
+    <!-- Amount Column -->
+    <ng-container matColumnDef="amount">
+      <mat-header-cell *matHeaderCellDef> Amount </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.amount }} </mat-cell>
+    </ng-container>
+
+    <!-- Datetime Transaction Column -->
+    <ng-container matColumnDef="datetimeTransaction">
+      <mat-header-cell *matHeaderCellDef>  Transaction Datetime</mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.datetimeTransaction | date:'short' }} </mat-cell>
+    </ng-container>
+
+    <!-- Datetime Submit Transaction Column -->
+    <ng-container matColumnDef="datetimeSubmitTransaction">
+      <mat-header-cell *matHeaderCellDef>  Submitted Datetime </mat-header-cell>
+      <mat-cell *matCellDef="let transaction"> {{ transaction.datetimeSubmitTransaction | date:'short' }} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+
+  <mat-paginator [pageSize]="pageSize" [pageSizeOptions]="[5, 10, 25, 100]"></mat-paginator>
+</div>
