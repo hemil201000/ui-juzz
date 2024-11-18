@@ -2,10 +2,12 @@ import { Component } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { FormsModule } from '@angular/forms'; 
 import { Router } from '@angular/router';
+import { TransactionService } from '../../../services/transactionService';
 
 interface ApiResponse {
   imageQR: string; // Adjust the type based on your actual data
   id: string;
+  transactionUqNumber: string;
 }
 
 @Component({
@@ -18,24 +20,24 @@ interface ApiResponse {
 export class AmountEnterComponent {
   amount: number | null = null;
 
-  constructor(private http: HttpClient , private router: Router) {}
+  constructor(private http: HttpClient , private router: Router , private transactionServie : TransactionService) {}
 
   addAmount() {
-    if (this.amount) {
-      this.http.post<ApiResponse>('http://localhost:8082/transaction/generateQR', { amount: this.amount })
+    if (this.amount && this.amount>0) {
+      this.transactionServie.generateQR({ amount: this.amount })
         .subscribe({
           next: (response: ApiResponse) => {
-            console.log(response)
             const qrCodeImage = response.imageQR;
-             // Now TypeScript knows this exists
             const receipt = response.id;
+            const receiptNumber = response.transactionUqNumber
 
             this.router.navigate(['/payment'], {
               queryParams: {
                 amount: this.amount,
-                // qrCodeImage: `data:image/png;base64,${qrCodeImage}`,
                 qrCodeImage: qrCodeImage,
-                receipt: receipt
+                receipt: receipt,
+                receiptNumber : receiptNumber
+
               }
             });
           },
@@ -44,7 +46,7 @@ export class AmountEnterComponent {
           }
         });
     } else {
-      alert('Please enter an amount.');
+      alert('Please enter valid amount.');
     }
   }
 }

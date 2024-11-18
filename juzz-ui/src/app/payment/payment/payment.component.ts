@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common'; 
+import { TransactionService } from '../../../services/transactionService';
 
 interface ApiResponse {
   submitTransactionId: string;
@@ -19,12 +20,13 @@ export class PaymentComponent implements OnInit {
   amount: number | null = null;
   qrCodeImage: string = ''; // URL or byte array for QR code
   receipt: string = '';
+  receiptNumber : string = '';
   transactionNumber: string = '';
   upiId: string = '';
   showTransactionField = false;
   showUpiField = false
 
-  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private router: Router, private route: ActivatedRoute , private transactionServie : TransactionService ) { }
 
   ngOnInit() {
     // Retrieve data from the previous route
@@ -33,13 +35,13 @@ export class PaymentComponent implements OnInit {
       this.amount = +params['amount'];
       this.qrCodeImage = params['qrCodeImage']; // Assuming you pass the image as a URL
       this.receipt = params['receipt'];
+      this.receiptNumber = params['receiptNumber'];
     });
   }
 
 
   enterTransactionId() {
-
-    this.http.post<ApiResponse>('http://localhost:8082/transaction/submit/transaction', {
+    this.transactionServie.submitPaymentData({
       transactionId: this.receipt,
       transactionNumber: this.transactionNumber,
       upiId: this.upiId
