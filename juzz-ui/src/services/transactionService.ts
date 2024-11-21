@@ -9,11 +9,11 @@ export class TransactionService {
   constructor(private apiService: ApiService) { }
 
   generateQR(data: any): Observable<any> {
-    return this.apiService.post(Constants.JUZZ_URL, `transaction/generateQR`, data);
+    return this.apiService.post(Constants.JUZZ_URL, `v1/generateQR`, data);
   }
 
   submitPaymentData(data: any): Observable<any> {
-    return this.apiService.post(Constants.JUZZ_URL, `transaction/submit/transaction`, data);
+    return this.apiService.post(Constants.JUZZ_URL, `v1/submit/transaction`, data);
   }
 
 }

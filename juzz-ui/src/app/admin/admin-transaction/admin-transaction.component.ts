@@ -12,7 +12,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { StringFilterComponent } from '../shared/string-filter/string-filter.component';
+import { StringFilterComponent } from '../../shared/string-filter/string-filter.component';
 
 @Component({
   selector: 'app-admin-transaction',
