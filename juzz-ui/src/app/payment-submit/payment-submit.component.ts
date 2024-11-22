@@ -16,7 +16,6 @@ export class PaymentSubmitComponent implements OnInit{
 
   ngOnInit(): void {
     this.route.queryParams.subscribe(params => {
-      console.log(params)
       this.saveTransactionId = params['submitResponseId'];
       
     });

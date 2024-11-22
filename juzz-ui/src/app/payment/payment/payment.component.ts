@@ -31,7 +31,6 @@ export class PaymentComponent implements OnInit {
   ngOnInit() {
     // Retrieve data from the previous route
     this.route.queryParams.subscribe(params => {
-      console.log(params)
       this.amount = +params['amount'];
       this.qrCodeImage = params['qrCodeImage']; // Assuming you pass the image as a URL
       this.receipt = params['receipt'];
@@ -41,6 +40,20 @@ export class PaymentComponent implements OnInit {
 
 
   enterTransactionId() {
+    if(this.showTransactionField || this.showUpiField){
+      if(this.showTransactionField && this.transactionNumber.length==0){
+        alert("Please Enter Transaction Number")
+      }else if (this.showUpiField && this.upiId.length==0){
+        alert("Please Enter UPI Id")
+      }else if(this.showTransactionField && this.transactionNumber.length!=0){
+        this.callSubmitTransaction();
+      }else if(this.showUpiField && this.upiId.length!=0){
+        this.callSubmitTransaction();
+      }
+    }
+  }
+
+  callSubmitTransaction(){
     this.transactionServie.submitPaymentData({
       transactionId: this.receipt,
       transactionNumber: this.transactionNumber,
@@ -48,7 +61,6 @@ export class PaymentComponent implements OnInit {
     })
       .subscribe({
         next: (response: ApiResponse) => {
-          console.log(response)
           const responseId = response.submitTransactionId;
           const responseMessage = response.message;
 
@@ -72,8 +84,6 @@ export class PaymentComponent implements OnInit {
           console.error('Error occurred:', error);
         }
       });
-
-
 
   }
 }

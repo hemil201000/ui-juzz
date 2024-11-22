@@ -6,7 +6,7 @@ import { AdminTransactionComponent } from './admin/admin-transaction/admin-trans
 import { LoginComponent } from './admin/login/login.component';
 
 export const routes: Routes = [
-    { path: '', component: AmountEnterComponent },
+    { path: 'enter', component: AmountEnterComponent },
     { path: 'payment', component: PaymentComponent },
     { path: 'submit-transaction', component: PaymentSubmitComponent },
     { path: 'admin-transaction', component: AdminTransactionComponent },

@@ -14,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class LoginComponent {
 
-  constructor(private authService: LoginService,private router: Router) {}
+  constructor(private authService: LoginService) {}
 
   logiObj: any = {
     "userName": "",
@@ -22,13 +22,12 @@ export class LoginComponent {
   };
 
   http= inject(HttpClient);
-  // router = inject(Router);
+  router = inject(Router);
 
   onLogin() {
-    debugger;
     this.authService.login(this.logiObj).subscribe((res:any)=>{
       if(res.is_verified) {
-        alert("Login Success");
+        // alert("Login Success");
         // const enrUserName =  this.encriptData(this.logiObj.EmailId);
         // localStorage.setItem("uName",enrUserName);
         localStorage.setItem('angular18Token',res.access_token);

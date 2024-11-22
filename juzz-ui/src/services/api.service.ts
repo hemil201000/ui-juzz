@@ -1,11 +1,12 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable()
 export class ApiService {
  
-    constructor(public http: HttpClient) {
-    }
+    // constructor(public http: HttpClient) {
+    // }
+    http = inject(HttpClient)
  
    get(_baseUrl : string, endpoint: string, params?: any, reqOpts?: any) {
      if (!reqOpts) {
@@ -30,5 +31,9 @@ export class ApiService {
      return this.http.post<any>(_baseUrl + endpoint, body,{headers: {'Content-Type': 'application/json'} });
    }
 
+   postAdmin(_baseUrl : string,endpoint: string, body: any , token:any, reqOpts?: any) {
+    //console.log(" this is trest "+_baseUrl + endpoint+" second param "+ JSON.stringify(body));
+    return this.http.post<any>(_baseUrl + endpoint, body,{headers: {'Content-Type': 'application/json' , 'Authorization' : token} });
+  }
 
  }

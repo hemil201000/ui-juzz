@@ -10,13 +10,14 @@ import { ApiService } from '../services/api.service';
 import { HttpClientModule } from '@angular/common/http';
 import { LoginComponent } from './admin/login/login.component';
 import { LoginService } from '../services/login.service';
+import { AdminTransactionService } from '../services/adminTransaction.service';
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet , AmountEnterComponent , PaymentComponent , PaymentSubmitComponent , StringFilterComponent , HttpClientModule , LoginComponent ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
-  providers: [TransactionService , ApiService , LoginService]
+  providers: [TransactionService , ApiService , LoginService , AdminTransactionService]
 })
 export class AppComponent {
   title = 'juzz-ui';

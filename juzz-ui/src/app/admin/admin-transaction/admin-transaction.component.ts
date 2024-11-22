@@ -13,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { StringFilterComponent } from '../../shared/string-filter/string-filter.component';
+import { AdminTransactionService } from '../../../services/adminTransaction.service';
 
 @Component({
   selector: 'app-admin-transaction',
@@ -47,26 +48,26 @@ export class AdminTransactionComponent implements OnInit {
     filter: {
       pagination: { start: 0, limit: 10 },
       sort_by: "id",
-      sort_order: true,
-      search: [{
-        column: 'id',
-        applied: false,
-        text: '',
-        old: '',
-        comparision: 'Equal to'
-      },{
-        column: 'upiID',
-        applied: false,
-        text: '',
-        old: '',
-        comparision: 'Equal to'
-      },{
-        column: 'transactionNumber',
-        applied: false,
-        text: '',
-        old: '',
-        comparision: 'Equal to'
-      }] as Array<any>
+      sort_order: true
+    //   search: [{
+    //     column: 'id',
+    //     applied: false,
+    //     text: '',
+    //     old: '',
+    //     comparision: 'Equal to'
+    //   },{
+    //     column: 'upiID',
+    //     applied: false,
+    //     text: '',
+    //     old: '',
+    //     comparision: 'Equal to'
+    //   },{
+    //     column: 'transactionNumber',
+    //     applied: false,
+    //     text: '',
+    //     old: '',
+    //     comparision: 'Equal to'
+    //   }] as Array<any>
     },
   };
 
@@ -80,7 +81,7 @@ export class AdminTransactionComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient , private adminTransactionService : AdminTransactionService) { }
 
   ngOnInit() {
     this.loadData();
@@ -97,7 +98,7 @@ export class AdminTransactionComponent implements OnInit {
           this.transactionListRequest.filter.pagination.start = this.paginator.pageIndex * this.paginator.pageSize;
           this.dataSource.paginator= this.paginator
           this.pageNo = this.paginator.pageIndex + 1;
-          return this.getConfigurationList();
+          return this.getTransactionList();
         }),
         map(data => {
           this.transactionList = data;
@@ -110,16 +111,16 @@ export class AdminTransactionComponent implements OnInit {
   }
 
   loadData() {
-    this.getConfigurationList().subscribe(data => {
-      console.log(data)
+    this.getTransactionList().subscribe(data => {
       this.transactionList = data;
       this.dataSource.data = this.transactionList.adminTransactionList;
       this.resultsLength = this.transactionList.totalCount;
     });
   }
 
-  getConfigurationList() {
-    return this.http.post<any>('http://localhost:8082/admin/transaction/list', this.transactionListRequest);
+  getTransactionList() {
+    const token =  localStorage.getItem('angular18Token');
+    return this.adminTransactionService.getTransactionList(this.transactionListRequest , token);
   }
 
   // search(column: string, filterValue: string) {
